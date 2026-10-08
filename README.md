@@ -1,6 +1,6 @@
 # kaznlp-toolkit
 
-[![CI](https://github.com/GH_USER/kaznlp-toolkit/actions/workflows/ci.yml/badge.svg)](https://github.com/GH_USER/kaznlp-toolkit/actions/workflows/ci.yml)
+[![CI](https://github.com/YOUR_USERNAME/kaznlp-toolkit/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/kaznlp-toolkit/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue)
 
@@ -29,7 +29,7 @@ these steps and computes the metrics the project is judged on.
 ## Installation
 
 ```bash
-git clone https://github.com/GH_USER/kaznlp-toolkit.git
+git clone https://github.com/YOUR_USERNAME/kaznlp-toolkit.git
 cd kaznlp-toolkit
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"          # core + scikit-learn + test tools
@@ -63,10 +63,10 @@ from kaznlp.pii import scrub
 from kaznlp.dedup import deduplicate
 from kaznlp.metrics import macro_f1, cohen_kappa
 
-normalize("Қaзақстан ҡызметі")            # 'Қазақстан қызметі'
-scrub("Хабарласыңыз: +7 701 123 45 67")   # 'Хабарласыңыз: <PHONE>'
-deduplicate([news, "Репост: " + news])    # [0]
-cohen_kappa(annotator_a, annotator_b)     # agreement on the gold set (target >= 0.80)
+normalize("Қaзақстан ҡызметі")  # 'Қазақстан қызметі'
+scrub("Хабарласыңыз: +7 701 123 45 67")  # 'Хабарласыңыз: <PHONE>'
+deduplicate([news, "Репост: " + news])  # [0]
+cohen_kappa(annotator_a, annotator_b)  # agreement on the gold set (target >= 0.80)
 ```
 
 ## Sample data
