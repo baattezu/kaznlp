@@ -1,0 +1,30 @@
+name: Release
+
+# Continuous delivery: pushing a version tag (for example v0.1.0) runs the tests,
+# builds the wheel and source archive, and publishes them as a GitHub Release.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      - run: pytest --cov=kaznlp --cov-fail-under=90
+      - name: Check that the tag matches the package version
+        run: |
+          version=$(python -c "import kaznlp; print(kaznlp.__version__)")
+          test "v$version" = "$GITHUB_REF_NAME" || { echo "tag $GITHUB_REF_NAME != v$version"; exit 1; }
+      - run: python -m build
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true

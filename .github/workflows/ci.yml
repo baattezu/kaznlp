@@ -1,0 +1,99 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint (ruff)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install ruff
+      - run: ruff check .
+      - run: ruff format --check .
+
+  test:
+    name: Tests (${{ matrix.os }}, py${{ matrix.python-version }})
+    needs: lint
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+        include:
+          # Windows checks that Kazakh text is read and written as UTF-8 everywhere
+          - os: windows-latest
+            python-version: "3.12"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - run: pip install -e ".[dev]"
+      - run: pytest --cov=kaznlp --cov-report=term-missing --cov-report=xml --cov-fail-under=90
+      - uses: actions/upload-artifact@v4
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.12'
+        with:
+          name: coverage-report
+          path: coverage.xml
+
+  pipeline:
+    name: Data pipeline smoke run
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - run: pip install ".[baseline]"
+      - name: Clean, split, train baseline, evaluate
+        shell: bash  # enables pipefail, so a failure before "| tee" fails the step
+        run: |
+          mkdir -p build
+          kaznlp clean data/sample.jsonl build/clean.jsonl | tee build/clean_stats.json
+          kaznlp split build/clean.jsonl build/split
+          for task in sentiment risk; do
+            kaznlp baseline build/split/train.jsonl build/split/test.jsonl build/pred_$task.jsonl --label-field $task
+            kaznlp evaluate build/pred_$task.jsonl --label-field $task --min-f1 0.3 --output build/report_$task.json
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-reports
+          path: build/*.json
+
+  build:
+    name: Build package
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install build twine
+      - run: python -m build
+      - run: twine check dist/*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
