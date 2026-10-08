@@ -1,0 +1,64 @@
+{"id": 1, "date": "2026-07-01", "text": "KazNet жаңа тарифі өте ұнады, интернет жылдам жұмыс істейді.", "sentiment": "positive", "risk": "none"}
+{"id": 2, "date": "2026-07-02", "text": "Altyn Bank қолданбасы ыңғайлы, аударым бір минутта өтті.", "sentiment": "positive", "risk": "none"}
+{"id": 3, "date": "2026-07-03", "text": "Ертең сағат 10:00-де Altyn Bank баспасөз конференциясын өткізеді.", "sentiment": "neutral", "risk": "none"}
+{"id": 4, "date": "2026-07-04", "text": "Үш күн бойы интернет жоқ, қолдау қызметі жауап бермейді. Ұят!", "sentiment": "negative", "risk": "reputational"}
+{"id": 5, "date": "2026-07-05", "text": "Altyn Bank жаңа депозит өнімін ұсынды, мөлшерлемесі 14 пайыз.", "sentiment": "neutral", "risk": "none"}
+{"id": 6, "date": "2026-07-06", "text": "Супер сервис, всё быстро сделали, үлкен рахмет!", "sentiment": "positive", "risk": "none"}
+{"id": 7, "date": "2026-07-07", "text": "Операторлар дөрекі сөйлейді, енді бұл банкке бармаймын.", "sentiment": "negative", "risk": "reputational"}
+{"id": 8, "date": "2026-07-08", "text": "Келісімшартта жоқ комиссияны алып жатыр, прокуратураға шағым жазамын.", "sentiment": "negative", "risk": "legal"}
+{"id": 9, "date": "2026-07-09", "text": "Altyn Bank ертең жабылады деп естідім, барлығы ақшаларын шешіп алыңдар!", "sentiment": "negative", "risk": "misinformation"}
+{"id": 10, "date": "2026-07-09", "text": "Репост: Altyn Bank ертең жабылады деп естідім, барлығы ақшаларын шешіп алыңдар!!", "sentiment": "negative", "risk": "misinformation"}
+{"id": 11, "date": "2026-07-10", "text": "Филиалдың жұмыс уақыты өзгерді: дүйсенбі-жұма 9:00-18:00.", "sentiment": "neutral", "risk": "none"}
+{"id": 12, "date": "2026-07-11", "text": "Ҡызмет көрсету сапасы жақсарды, рахмет!", "sentiment": "positive", "risk": "none"}
+{"id": 13, "date": "2026-07-12", "text": "Ақшамды екі апта бойы қайтармай жүр, мүлдем жауапсыз компания.", "sentiment": "negative", "risk": "reputational"}
+{"id": 14, "date": "2026-07-13", "text": "Кто знает, KazNet филиалы сенбіде жұмыс істей ме?", "sentiment": "neutral", "risk": "none"}
+{"id": 15, "date": "2026-07-14", "text": "Менің дербес деректерім келісімсіз үшінші тарапқа берілген сияқты, сотқа береміз.", "sentiment": "negative", "risk": "legal"}
+{"id": 16, "date": "2026-07-15", "text": "Жаңа филиал ашылды, кезек жоқ, қызметкерлер сыпайы.", "sentiment": "positive", "risk": "none"}
+{"id": 17, "date": "2026-07-16", "text": "KazNet мұнаралары денсаулыққа зиян деген ақпарат тарап жатыр, бөлісіңіз!", "sentiment": "negative", "risk": "misinformation"}
+{"id": 18, "date": "2026-07-17", "text": "Компания үшінші тоқсандағы қаржылық есебін жариялады.", "sentiment": "neutral", "risk": "none"}
+{"id": 19, "date": "2026-07-18", "text": "Сервис ужасный, кезекте екі сағат тұрдым, ешкім көмектеспеді.", "sentiment": "negative", "risk": "reputational"}
+{"id": 20, "date": "2026-07-19", "text": "Акция өте тиімді екен, достарыма да ұсындым.", "sentiment": "positive", "risk": "none"}
+{"id": 21, "date": "2026-07-20", "text": "Несие бойынша заңсыз айыппұл есептеді, адвокатпен сөйлесіп жатырмын.", "sentiment": "negative", "risk": "legal"}
+{"id": 22, "date": "2026-07-21", "text": "Хабарласыңыз: +7 701 123 45 67, менеджер Айдос.", "sentiment": "neutral", "risk": "none"}
+{"id": 23, "date": "2026-07-22", "text": "Мобильді қосымша жаңартылды, енді төлем жасау оңай.", "sentiment": "positive", "risk": "none"}
+{"id": 24, "date": "2026-07-23", "text": "Компания директоры елден қашып кетті дейді, ресми хабарлама жоқ.", "sentiment": "negative", "risk": "misinformation"}
+{"id": 25, "date": "2026-07-24", "text": "Интернет жылдамдығы кешке қарай қатты түсіп кетеді, ұнамайды.", "sentiment": "negative", "risk": "reputational"}
+{"id": 26, "date": "2026-07-25", "text": "Altyn Bank Алматыда тағы екі банкомат орнатты.", "sentiment": "neutral", "risk": "none"}
+{"id": 27, "date": "2026-07-26", "text": "Карта 4400 4301 2345 6789 себепсіз бұғатталды, ешкім түсіндірмейді!", "sentiment": "negative", "risk": "reputational"}
+{"id": 28, "date": "2026-07-27", "text": "Қызметкерлер өте көмекші, мәселемді тез шешті.", "sentiment": "positive", "risk": "none"}
+{"id": 29, "date": "2026-07-28", "text": "Шарт талаптарын бұзғаны үшін KazNet-ке қарсы сот ісі басталды.", "sentiment": "negative", "risk": "legal"}
+{"id": 30, "date": "2026-07-29", "text": "Тариф бағасы 1 тамыздан бастап өзгереді.", "sentiment": "neutral", "risk": "none"}
+{"id": 31, "date": "2026-07-30", "text": "Банк клиенттердің ақшасын шетелге шығарып жатыр деген жалған хабар тарады.", "sentiment": "negative", "risk": "misinformation"}
+{"id": 32, "date": "2026-07-31", "text": "Жаңа жылдам интернет тарифі студенттерге жеңілдікпен беріледі, керемет!", "sentiment": "positive", "risk": "none"}
+{"id": 33, "date": "2026-08-01", "text": "Қолдау қызметіне жазсаңыз, support@example.kz поштасына жіберіңіз.", "sentiment": "neutral", "risk": "none"}
+{"id": 34, "date": "2026-08-02", "text": "Бір айдан бері шағымыма жауап жоқ, бұл қалай?", "sentiment": "negative", "risk": "reputational"}
+{"id": 35, "date": "2026-08-03", "text": "Менің ЖСН 950512300457 келісімсіз несие рәсімделген, полицияға арыз бердім.", "sentiment": "negative", "risk": "legal"}
+{"id": 36, "date": "2026-08-04", "text": "Банк қосымшасы тұрақты жұмыс істейді, ешқандай ақау жоқ.", "sentiment": "positive", "risk": "none"}
+{"id": 37, "date": "2026-08-05", "text": "KazNet абоненттерге жаңа роуминг пакетін ұсынды.", "sentiment": "neutral", "risk": "none"}
+{"id": 38, "date": "2026-08-06", "text": "Телефон арқылы алаяқтар банк атынан хабарласып жатыр, абай болыңыздар.", "sentiment": "negative", "risk": "reputational"}
+{"id": 39, "date": "2026-08-07", "text": "Банкоматтар бүкіл қалада жұмыс істемейді, бәрі сынған дейді, жалған ақпарат шығар.", "sentiment": "neutral", "risk": "misinformation"}
+{"id": 40, "date": "2026-08-08", "text": "Рахмет, кредит картаны бір күнде дайындап берді.", "sentiment": "positive", "risk": "none"}
+{"id": 41, "date": "2026-08-09", "text": "Шарттағы пайыздық мөлшерлемені біржақты өзгертті, бұл заңға қайшы.", "sentiment": "negative", "risk": "legal"}
+{"id": 42, "date": "2026-08-10", "text": "Филиалда кондиционер жоқ, кезекте тұру мүмкін емес.", "sentiment": "negative", "risk": "reputational"}
+{"id": 43, "date": "2026-08-11", "text": "Компания жаңа басқарма төрағасын тағайындады.", "sentiment": "neutral", "risk": "none"}
+{"id": 44, "date": "2026-08-12", "text": "Онлайн чаттағы оператор бәрін түсінікті етіп айтып берді, жарайсыңдар!", "sentiment": "positive", "risk": "none"}
+{"id": 45, "date": "2026-08-13", "text": "@aidos_k KazNet интернеті сенде де жоқ па?", "sentiment": "negative", "risk": "reputational"}
+{"id": 46, "date": "2026-08-14", "text": "KazNet жаңа 5G желісін Астанада іске қосты.", "sentiment": "neutral", "risk": "none"}
+{"id": 47, "date": "2026-08-15", "text": "Депозит бойынша сыйақыны уақытында төлемеді, сотқа жүгінемін.", "sentiment": "negative", "risk": "legal"}
+{"id": 48, "date": "2026-08-16", "text": "Altyn Bank банкрот болды деген видео фейк, бөліспеңіздер.", "sentiment": "neutral", "risk": "misinformation"}
+{"id": 49, "date": "2026-08-17", "text": "Интернет тұрақты, бағасы да қолжетімді, ұсынамын.", "sentiment": "positive", "risk": "none"}
+{"id": 50, "date": "2026-08-18", "text": "Қосымша үнемі қатып қалады, төлем жасай алмадым.", "sentiment": "negative", "risk": "reputational"}
+{"id": 51, "date": "2026-08-19", "text": "Бүгін Қaзақстан бойынша жаңа тарифтер жарияланады.", "sentiment": "neutral", "risk": "none"}
+{"id": 52, "date": "2026-08-20", "text": "Жеке деректерім ашық базада жарияланған, бұл заң бұзушылық!", "sentiment": "negative", "risk": "legal"}
+{"id": 53, "date": "2026-08-21", "text": "Банк бөлімшесінде маған өте жақсы кеңес берді.", "sentiment": "positive", "risk": "none"}
+{"id": 54, "date": "2026-08-22", "text": "KazNet желісі халықты бақылау үшін жасалған деген хабарлама тарап жатыр.", "sentiment": "negative", "risk": "misinformation"}
+{"id": 55, "date": "2026-08-23", "text": "Қолдау қызметі тәулік бойы жұмыс істейді: 8 (727) 300-00-00.", "sentiment": "neutral", "risk": "none"}
+{"id": 56, "date": "2026-08-24", "text": "Үшінші рет ақша екі рет шешіліп кетті, қайтармайды, ұят!", "sentiment": "negative", "risk": "reputational"}
+{"id": 57, "date": "2026-08-25", "text": "Жаңа кешбэк бағдарламасы өте пайдалы екен.", "sentiment": "positive", "risk": "none"}
+{"id": 58, "date": "2026-08-26", "text": "Тұтынушылар құқығын қорғау комитетіне шағым түсірдім, келісімшарт бұзылды.", "sentiment": "negative", "risk": "legal"}
+{"id": 59, "date": "2026-08-27", "text": "Altyn Bank үшінші тоқсанда пайдасын 12 пайызға арттырды.", "sentiment": "neutral", "risk": "none"}
+{"id": 60, "date": "2026-08-28", "text": "Банк ертең барлық депозиттерді бұғаттайды деп жазып жатыр, бұл өтірік.", "sentiment": "neutral", "risk": "misinformation"}
+{"id": 61, "date": "2026-08-29", "text": "Операторлар қайта-қайта қоңырау шалып, мазаны алды.", "sentiment": "negative", "risk": "reputational"}
+{"id": 62, "date": "2026-08-30", "text": "Бүгін KazNet-тің мерейтойы, абоненттерге сыйлық береді, тамаша!", "sentiment": "positive", "risk": "none"}
+{"id": 63, "date": "2026-08-31", "text": "Рұқсатсыз жазылым үшін ақша алып жатыр, бұл заңсыз.", "sentiment": "negative", "risk": "legal"}
+{"id": 64, "date": "2026-09-01", "text": "Банк жаңа оқу жылына студенттік карта шығарды.", "sentiment": "neutral", "risk": "none"}
