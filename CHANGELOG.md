@@ -13,5 +13,5 @@ All notable changes are listed here. Format follows
 - Time-based train/validation/test split.
 - Metrics: confusion matrix, per-class scores, macro-F1, risk recall, Cohen's kappa.
 - TF-IDF + logistic regression baseline.
-- `kaznlp` command-line interface and synthetic sample dataset.
+- `kaznlp` command-line interface (including `kaznlp show` demo) and synthetic sample dataset.
 - GitHub Actions CI and tag-based release workflow.

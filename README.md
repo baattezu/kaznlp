@@ -24,7 +24,7 @@ these steps and computes the metrics the project is judged on.
 | `kaznlp.split` | time-based 70/15/15 train/val/test split | the model is trained on the past and used on new mentions |
 | `kaznlp.metrics` | confusion matrix, per-class P/R/F1, macro-F1, risk recall, Cohen's kappa | risk classes are rare (5-8%), accuracy alone is misleading |
 | `kaznlp.baseline` | TF-IDF (char 2-5 grams) + class-weighted logistic regression | fallback model from the project's risk plan |
-| `kaznlp` CLI | `clean`, `split`, `baseline`, `evaluate` with a macro-F1 quality gate | the same pipeline runs locally and in CI |
+| `kaznlp` CLI | `show` (demo on one text), `clean`, `split`, `baseline`, `evaluate` with a macro-F1 quality gate | the same pipeline runs locally and in CI |
 
 ## Installation
 
@@ -40,7 +40,22 @@ Only `numpy` is required for the core library; scikit-learn is an optional extra
 
 ## Quick start
 
-### Command line
+### Try it on one sentence
+
+```bash
+kaznlp show "Менің ЖСН 950512300457, телефон +7 701 123 45 67. Қaзақстан ҡызметі жақсы"
+kaznlp show            # interactive mode: type messages, empty line to quit
+```
+
+```
+input:      Менің ЖСН 950512300457, телефон +7 701 123 45 67. Қaзақстан ҡызметі жақсы
+normalized: Менің ЖСН 950512300457, телефон +7 701 123 45 67. Қазақстан қызметі жақсы
+            letters fixed: 'a'->'а', 'ҡ'->'қ'
+scrubbed:   Менің ЖСН <IIN>, телефон <PHONE>. Қазақстан қызметі жақсы
+pii found:  IIN='950512300457', PHONE='+7 701 123 45 67'
+```
+
+### Command line pipeline
 
 ```bash
 kaznlp clean data/sample.jsonl build/clean.jsonl          # normalize, mask PII, deduplicate

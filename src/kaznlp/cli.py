@@ -1,4 +1,4 @@
-"""Command-line interface: ``kaznlp clean | split | baseline | evaluate``.
+"""Command-line interface: ``kaznlp show | clean | split | baseline | evaluate``.
 
 The four commands form the data pipeline of the project:
 
@@ -18,10 +18,42 @@ from kaznlp.dedup import deduplicate
 from kaznlp.io import read_jsonl, write_jsonl
 from kaznlp.metrics import classification_report
 from kaznlp.normalize import normalize
-from kaznlp.pii import count_pii, scrub
+from kaznlp.pii import count_pii, find_pii, scrub
 from kaznlp.split import temporal_split
 
 RISK_LABELS = ["reputational", "legal", "misinformation"]
+
+
+def show_text(text: str) -> str:
+    """Explain step by step what the cleaning pipeline does to one text."""
+    normalized = normalize(text)
+    lines = [f"input:      {text}", f"normalized: {normalized}"]
+    if normalized != text:
+        changed = [f"{a!r}->{b!r}" for a, b in zip(text, normalized, strict=False) if a != b]
+        if len(text) == len(normalized) and changed:
+            lines.append(f"            letters fixed: {', '.join(changed)}")
+    found = find_pii(normalized)
+    lines.append(f"scrubbed:   {scrub(normalized)}")
+    lines.append(
+        "pii found:  " + (", ".join(f"{m.kind}={m.value!r}" for m in found) if found else "none")
+    )
+    return "\n".join(lines)
+
+
+def cmd_show(args: argparse.Namespace) -> int:
+    if args.text:
+        print(show_text(" ".join(args.text)))
+        return 0
+    print("Type a message (empty line or Ctrl+D to quit).")
+    while True:
+        try:
+            text = input("> ")
+        except EOFError:
+            break
+        if not text.strip():
+            break
+        print(show_text(text) + "\n")
+    return 0
 
 
 def cmd_clean(args: argparse.Namespace) -> int:
@@ -102,6 +134,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="kaznlp", description=__doc__.splitlines()[0])
     parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)
+
+    p = sub.add_parser("show", help="show what cleaning does to one text (interactive demo)")
+    p.add_argument("text", nargs="*", help="text to check; omit for interactive mode")
+    p.set_defaults(func=cmd_show)
 
     p = sub.add_parser("clean", help="normalize text, mask PII and remove near-duplicates")
     p.add_argument("input")

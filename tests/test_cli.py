@@ -75,3 +75,26 @@ def test_version_flag(capsys):
         main(["--version"])
     assert exc.value.code == 0
     assert "kaznlp" in capsys.readouterr().out
+
+
+def test_show_explains_cleaning(capsys):
+    assert main(["show", "Қ\u0061зақстан, телефон +7 701 123 45 67"]) == 0
+    out = capsys.readouterr().out
+    assert "normalized: Қазақстан" in out
+    assert "<PHONE>" in out
+    assert "PHONE=" in out
+
+
+def test_show_interactive_mode(monkeypatch, capsys):
+    answers = iter(["жазыңыз a@b.kz", ""])
+    monkeypatch.setattr("builtins.input", lambda _: next(answers))
+    assert main(["show"]) == 0
+    assert "<EMAIL>" in capsys.readouterr().out
+
+
+def test_show_interactive_mode_stops_on_eof(monkeypatch):
+    def eof(_):
+        raise EOFError
+
+    monkeypatch.setattr("builtins.input", eof)
+    assert main(["show"]) == 0
