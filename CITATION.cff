@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "kaznlp-toolkit: preprocessing and evaluation tools for Kazakh sentiment and risk classification"
+authors:
+  - family-names: Bayassov
+    given-names: Temirkhan
+version: 0.1.0
+date-released: 2026-10-08
+license: MIT
+repository-code: "https://github.com/GH_USER/kaznlp-toolkit"
+keywords: [nlp, kazakh, sentiment-analysis, text-preprocessing, minhash]
