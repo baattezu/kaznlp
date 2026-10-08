@@ -29,6 +29,15 @@ _PATTERNS: list[tuple[str, re.Pattern[str]]] = [
 
 @dataclass(frozen=True)
 class PiiMatch:
+    """One piece of personal data found in a text.
+
+    Attributes:
+        kind: type of data: EMAIL, URL, CARD, PHONE, IIN or USER.
+        start: index of the first character in the text.
+        end: index after the last character (``text[start:end] == value``).
+        value: the matched text itself.
+    """
+
     kind: str
     start: int
     end: int
@@ -44,6 +53,7 @@ def is_valid_iin(value: str) -> bool:
     if len(value) != 12 or not value.isdigit():
         return False
     digits = [int(c) for c in value]
+    # first pass: weights 1..11 for the first 11 digits
     control = sum(d * w for d, w in zip(digits, range(1, 12), strict=False)) % 11
     if control == 10:
         weights = [3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2]

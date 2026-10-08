@@ -41,6 +41,7 @@ def show_text(text: str) -> str:
 
 
 def cmd_show(args: argparse.Namespace) -> int:
+    """``kaznlp show``: explain cleaning for one text, or ask for texts interactively."""
     if args.text:
         print(show_text(" ".join(args.text)))
         return 0
@@ -57,6 +58,12 @@ def cmd_show(args: argparse.Namespace) -> int:
 
 
 def cmd_clean(args: argparse.Namespace) -> int:
+    """``kaznlp clean``: normalize -> mask PII -> remove near-duplicates.
+
+    Reads a JSONL file, writes the cleaned records to a new JSONL file and prints
+    statistics (how many records were removed, how many PII items were masked).
+    PII is counted on the raw text, before masking, so the numbers are honest.
+    """
     records = read_jsonl(args.input)
     texts = [str(r[args.text_field]) for r in records]
     pii = count_pii(texts)
@@ -80,6 +87,7 @@ def cmd_clean(args: argparse.Namespace) -> int:
 
 
 def cmd_split(args: argparse.Namespace) -> int:
+    """``kaznlp split``: write train/val/test JSONL files split by date."""
     parts = temporal_split(
         read_jsonl(args.input), date_field=args.date_field, ratios=tuple(args.ratios)
     )
@@ -91,6 +99,11 @@ def cmd_split(args: argparse.Namespace) -> int:
 
 
 def cmd_baseline(args: argparse.Namespace) -> int:
+    """``kaznlp baseline``: train the TF-IDF model on train, predict the test file.
+
+    The output is the test file with an extra ``prediction`` field per record, which
+    is exactly the input format of ``kaznlp evaluate``.
+    """
     from kaznlp.baseline import train_baseline
 
     train = read_jsonl(args.train)
@@ -108,6 +121,11 @@ def cmd_baseline(args: argparse.Namespace) -> int:
 
 
 def cmd_evaluate(args: argparse.Namespace) -> int:
+    """``kaznlp evaluate``: print a metrics report and apply the quality gate.
+
+    Returns exit code 1 when macro-F1 is below ``--min-f1``. A non-zero exit code makes
+    the CI job fail, so the same command works as an automatic model quality gate.
+    """
     records = read_jsonl(args.predictions)
     y_true = [r[args.label_field] for r in records]
     y_pred = [r[args.prediction_field] for r in records]
@@ -131,6 +149,7 @@ def cmd_evaluate(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
+    """Define the ``kaznlp`` command and its subcommands with their options."""
     parser = argparse.ArgumentParser(prog="kaznlp", description=__doc__.splitlines()[0])
     parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -174,6 +193,15 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Entry point of the ``kaznlp`` command.
+
+    Args:
+        argv: arguments without the program name; ``None`` means ``sys.argv[1:]``.
+            Passing a list makes the CLI easy to call from tests.
+
+    Returns:
+        Process exit code (0 = success).
+    """
     args = build_parser().parse_args(argv)
     return args.func(args)
 

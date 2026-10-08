@@ -14,6 +14,7 @@ import numpy as np
 
 
 def _labels(y_true: Sequence[str], y_pred: Sequence[str], labels: Sequence[str] | None):
+    """Validate inputs and return the label order (given, or all seen labels sorted)."""
     if len(y_true) != len(y_pred):
         raise ValueError("y_true and y_pred must have the same length")
     if not y_true:
@@ -37,7 +38,12 @@ def confusion_matrix(
 def per_class_scores(
     y_true: Sequence[str], y_pred: Sequence[str], labels: Sequence[str] | None = None
 ) -> dict[str, dict[str, float]]:
-    """Precision, recall, F1 and support for every class (0.0 when undefined)."""
+    """Precision, recall, F1 and support for every class (0.0 when undefined).
+
+    - precision: of all mentions predicted as this class, how many really are;
+    - recall: of all mentions that really are this class, how many were found;
+    - F1: harmonic mean of the two; support: number of true mentions of the class.
+    """
     matrix, labels = confusion_matrix(y_true, y_pred, labels)
     scores = {}
     for i, label in enumerate(labels):
@@ -65,7 +71,13 @@ def macro_f1(
 
 
 def cohen_kappa(a: Sequence[str], b: Sequence[str]) -> float:
-    """Agreement between two annotators, corrected for agreement by chance."""
+    """Agreement between two annotators, corrected for agreement by chance.
+
+    ``kappa = (p_observed - p_expected) / (1 - p_expected)``, where ``p_observed`` is the
+    share of items both annotators labelled the same and ``p_expected`` is the share
+    they would agree on by pure chance given how often each uses each label.
+    1.0 = perfect agreement, 0.0 = no better than chance. The project requires >= 0.80.
+    """
     matrix, _ = confusion_matrix(a, b)
     n = matrix.sum()
     observed = np.trace(matrix) / n

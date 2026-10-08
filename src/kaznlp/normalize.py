@@ -75,6 +75,7 @@ def fix_mixed_script(text: str) -> str:
     """Replace Latin look-alike letters inside Cyrillic words with their Cyrillic twins."""
 
     def _fix(match: re.Match[str]) -> str:
+        """Fix one word if it mixes alphabets, otherwise return it unchanged."""
         word = match.group(0)
         return word.translate(LATIN_TO_CYRILLIC) if is_mixed_script(word) else word
 

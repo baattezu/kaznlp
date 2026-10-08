@@ -118,7 +118,7 @@ ruff check . && ruff format --check .
 pytest --cov=kaznlp
 ```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/technology-choices.md](docs/technology-choices.md).
+See [docs/how-it-works.md](docs/how-it-works.md) for a step-by-step explanation, [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/technology-choices.md](docs/technology-choices.md).
 
 ## Reproducibility
 

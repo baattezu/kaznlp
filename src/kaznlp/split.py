@@ -32,6 +32,7 @@ def temporal_split(
     n = len(ordered)
 
     def cut(position: int) -> int:
+        """Move a cut index forward until it no longer splits records of the same date."""
         while (
             0 < position < n and ordered[position][date_field] == ordered[position - 1][date_field]
         ):
