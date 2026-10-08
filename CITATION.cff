@@ -7,5 +7,5 @@ authors:
 version: 0.1.0
 date-released: 2026-10-08
 license: MIT
-repository-code: "https://github.com/YOUR_USERNAME/kaznlp-toolkit"
+repository-code: "https://github.com/baattezu/kaznlp"
 keywords: [nlp, kazakh, sentiment-analysis, text-preprocessing, minhash]
