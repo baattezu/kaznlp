@@ -21,7 +21,7 @@ spec:
         runAsUser: 10001
       containers:
         - name: kaznlp
-          # the tag is replaced by Jenkins (kubectl set image) with <build>-<commit>
+          # Jenkins replaces this tag with <version>-<build>-<commit> before `kubectl apply`
           image: kaznlp:latest
           imagePullPolicy: Never          # image is loaded into Minikube by the pipeline
           args: ["serve", "--host", "0.0.0.0", "--port", "8000"]

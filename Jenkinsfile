@@ -151,9 +151,10 @@ pipeline {
                     sh '''
                         # same as `minikube image load`: copy the image into the node's Docker
                         docker save ${IMAGE}:${TAG} | docker exec -i minikube docker load
-                        kubectl apply -f k8s/namespace.yaml
-                        kubectl apply -f k8s/
-                        kubectl -n ${K8S_NS} set image deployment/kaznlp kaznlp=${IMAGE}:${TAG}
+                        kubectl apply -f k8s/namespace.yaml -f k8s/service.yaml
+                        # render the Deployment with this build's tag, so one build = one revision
+                        sed "s#image: kaznlp:latest#image: ${IMAGE}:${TAG}#" k8s/deployment.yaml \
+                          | kubectl apply -f -
                         kubectl -n ${K8S_NS} annotate deployment/kaznlp --overwrite \
                           kubernetes.io/change-cause="Jenkins build ${BUILD_NUMBER}, commit ${GIT_SHORT}"
                         kubectl -n ${K8S_NS} rollout status deployment/kaznlp --timeout=120s
