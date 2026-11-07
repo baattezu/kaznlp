@@ -4,6 +4,14 @@ All notable changes are listed here. Format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- `kaznlp serve`: HTTP cleaning service (`GET /health`, `POST /clean`), standard library only.
+- Multi-stage `Dockerfile` (test stage runs ruff + pytest; non-root runtime with healthcheck).
+- Jenkins CI/CD pipeline (`Jenkinsfile`) and Jenkins server as code (`jenkins/`).
+- Kubernetes manifests (`k8s/`) and automatic deployment to Minikube.
+
 ## [0.1.0] - 2026-10-08
 
 ### Added

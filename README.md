@@ -100,6 +100,10 @@ tests/               pytest test suite (metrics are checked against scikit-learn
 data/sample.jsonl    synthetic sample dataset
 docs/                technology choices and CI/CD description
 .github/workflows/   CI (ci.yml) and release (release.yml) pipelines
+Dockerfile           multi-stage image: `test` stage (lint + tests) and runtime service
+Jenkinsfile          Jenkins CI/CD pipeline (tests -> image -> smoke test -> Minikube)
+jenkins/             Jenkins server as code (Dockerfile, plugins, JCasC, compose)
+k8s/                 Kubernetes manifests (namespace, deployment, service)
 ```
 
 ## Development workflow
@@ -120,11 +124,43 @@ pytest --cov=kaznlp
 
 See [docs/how-it-works.md](docs/how-it-works.md) for a step-by-step explanation, [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/technology-choices.md](docs/technology-choices.md).
 
+## Docker, Jenkins and Kubernetes
+
+The package is also a small HTTP service (`kaznlp serve`, standard library only):
+`GET /health` and `POST /clean` with `{"text": "..."}` or `{"texts": [...]}`.
+
+```bash
+docker build --target test -t kaznlp:test .     # ruff + pytest inside the image
+docker build -t kaznlp:latest .                  # runtime image, non-root, healthcheck
+docker run --rm -p 8000:8000 kaznlp:latest
+curl -X POST localhost:8000/clean -d '{"text": "ЖСН 950512300457, тел +7 701 123 45 67"}'
+docker run --rm kaznlp:latest clean data/sample.jsonl /tmp/clean.jsonl   # any CLI command
+```
+
+A self-hosted Jenkins runs the [Jenkinsfile](Jenkinsfile) on every commit
+(SCM polling every minute): lint and unit tests in the Docker `test` stage, runtime image
+build, smoke test of the running container, data-pipeline quality gate (macro-F1),
+optional push to Docker Hub, and deployment to Minikube with a rolling update.
+
+```bash
+minikube start --driver=docker
+./jenkins/make-kubeconfig.sh                    # kubeconfig for Jenkins (gitignored)
+docker compose -f jenkins/docker-compose.yml up -d --build
+# Jenkins: http://localhost:8080 (admin/admin), job "kaznlp-toolkit" is created by JCasC
+kubectl -n kaznlp get pods
+minikube service -n kaznlp kaznlp --url         # open the deployed service
+```
+
+To build from GitHub instead of the local clone, start Jenkins with
+`REPO_URL=https://github.com/baattezu/kaznlp.git`.
+
 ## Reproducibility
 
 - All randomness is seeded (`seed=42` in MinHash and the baseline).
 - The split depends only on dates, not on random shuffling.
 - Dependencies are declared in `pyproject.toml`; CI tests every supported Python version.
+- The Docker image fixes the OS, Python and library versions; each image is tagged
+  `<version>-<build>-<commit>`, so every deployed result maps to one Git commit.
 - [CITATION.cff](CITATION.cff) describes how to cite the software.
 
 ## License
