@@ -122,7 +122,7 @@ ruff check . && ruff format --check .
 pytest --cov=kaznlp
 ```
 
-See [docs/how-it-works.md](docs/how-it-works.md) for a step-by-step explanation, [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/technology-choices.md](docs/technology-choices.md).
+See [docs/how-it-works.md](docs/how-it-works.md) for a step-by-step explanation, [docs/devops.md](docs/devops.md) for the Jenkins/Kubernetes pipeline, [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/technology-choices.md](docs/technology-choices.md).
 
 ## Docker, Jenkins and Kubernetes
 
