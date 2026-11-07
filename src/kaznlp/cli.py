@@ -1,4 +1,4 @@
-"""Command-line interface: ``kaznlp show | clean | split | baseline | evaluate``.
+"""Command-line interface: ``kaznlp show | clean | split | baseline | evaluate | serve``.
 
 The four commands form the data pipeline of the project:
 
@@ -148,6 +148,14 @@ def cmd_evaluate(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_serve(args: argparse.Namespace) -> int:  # pragma: no cover (blocks forever)
+    """``kaznlp serve``: start the HTTP cleaning service (used in the Docker image)."""
+    from kaznlp.server import serve
+
+    serve(args.host, args.port)
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     """Define the ``kaznlp`` command and its subcommands with their options."""
     parser = argparse.ArgumentParser(prog="kaznlp", description=__doc__.splitlines()[0])
@@ -189,6 +197,11 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--min-f1", type=float, default=0.0)
     p.add_argument("--output")
     p.set_defaults(func=cmd_evaluate)
+
+    p = sub.add_parser("serve", help="run the HTTP cleaning service (GET /health, POST /clean)")
+    p.add_argument("--host", default="0.0.0.0")
+    p.add_argument("--port", type=int, default=8000)
+    p.set_defaults(func=cmd_serve)
     return parser
 
 
