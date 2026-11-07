@@ -30,6 +30,8 @@ pipeline {
         IMAGE      = 'kaznlp'
         CI_NETWORK = 'kaznlp-ci'          // Docker network shared with the Jenkins container
         K8S_NS     = 'kaznlp'
+        // parameters do not exist yet on the very first build of a new job
+        MIN_F1     = "${params.MIN_F1 ?: '0.3'}"
     }
 
     stages {
@@ -106,24 +108,13 @@ pipeline {
 
         stage('Data pipeline quality gate') {
             steps {
-                // the image itself runs clean -> split -> baseline -> evaluate on the sample
-                // data; `kaznlp evaluate --min-f1` exits with 1 when the model is too weak.
+                // clean -> split -> baseline -> evaluate inside the image (ci/quality_gate.sh);
+                // `kaznlp evaluate --min-f1` exits with 1 when the model is too weak.
                 sh '''
                     rm -rf pipeline && mkdir -p pipeline
-                    docker run --rm --entrypoint sh ${IMAGE}:${TAG} -c "
-                      set -e; cd /tmp
-                      kaznlp clean /app/data/sample.jsonl clean.jsonl > clean_stats.json
-                      kaznlp split clean.jsonl split
-                      for task in sentiment risk; do
-                        kaznlp baseline split/train.jsonl split/test.jsonl pred_\\$task.jsonl --label-field \\$task >&2
-                        kaznlp evaluate pred_\\$task.jsonl --label-field \\$task --min-f1 ${MIN_F1} \
-                          --output report_\\$task.json > /dev/null
-                      done
-                      tar -cf - clean_stats.json report_*.json" | tar -xf - -C pipeline
-                    cat pipeline/clean_stats.json
-                    for f in pipeline/report_*.json; do
-                      echo "$f: macro-F1 = $(sed -n 's/.*"macro_f1": \\([0-9.]*\\).*/\\1/p' $f)"
-                    done
+                    docker run --rm -i -e MIN_F1=${MIN_F1} --entrypoint sh ${IMAGE}:${TAG} -s \
+                      < ci/quality_gate.sh > pipeline/reports.tar
+                    tar -xf pipeline/reports.tar -C pipeline && rm pipeline/reports.tar
                 '''
             }
             post {
@@ -132,7 +123,7 @@ pipeline {
         }
 
         stage('Push to Docker Hub') {
-            when { expression { params.PUSH_TO_DOCKERHUB } }
+            when { expression { params.PUSH_TO_DOCKERHUB == true } }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub',
                                  usernameVariable: 'DH_USER', passwordVariable: 'DH_TOKEN')]) {
@@ -151,7 +142,7 @@ pipeline {
         stage('Deploy to Minikube') {
             when {
                 allOf {
-                    expression { params.DEPLOY }
+                    expression { params.DEPLOY != false }
                     expression { currentBuild.currentResult == 'SUCCESS' }
                 }
             }
@@ -174,7 +165,7 @@ pipeline {
         stage('Verify deployment') {
             when {
                 allOf {
-                    expression { params.DEPLOY }
+                    expression { params.DEPLOY != false }
                     expression { currentBuild.currentResult == 'SUCCESS' }
                 }
             }

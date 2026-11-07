@@ -18,7 +18,9 @@ RUN set -eux; \
 USER jenkins
 
 COPY --chown=jenkins plugins.txt /usr/share/jenkins/ref/plugins.txt
-RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
+# a fixed download host avoids random slow mirrors of get.jenkins.io
+ARG JENKINS_UC_DOWNLOAD_URL=https://archives.jenkins.io/plugins
+RUN JENKINS_UC_DOWNLOAD_URL=${JENKINS_UC_DOWNLOAD_URL} jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
 
 # skip the setup wizard: everything comes from configuration-as-code
 ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false -Dhudson.plugins.git.GitSCM.ALLOW_LOCAL_CHECKOUT=true" \
