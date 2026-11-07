@@ -102,6 +102,7 @@ docs/                technology choices and CI/CD description
 .github/workflows/   CI (ci.yml) and release (release.yml) pipelines
 Dockerfile           multi-stage image: `test` stage (lint + tests) and runtime service
 Jenkinsfile          Jenkins CI/CD pipeline (tests -> image -> smoke test -> Minikube)
+ci/quality_gate.sh   data-pipeline quality gate run inside the image by Jenkins
 jenkins/             Jenkins server as code (Dockerfile, plugins, JCasC, compose)
 k8s/                 Kubernetes manifests (namespace, deployment, service)
 ```
